@@ -1,3 +1,4 @@
+import f2000 from "./2000.png";
 import f2001 from "./2001.png";
 import f2002 from "./2002.png";
 import f2003 from "./2003.png";
@@ -20,6 +21,7 @@ import f2019 from "./2019.png";
 import f2020 from "./2020.png";
 
 export default [
+  // f2000, (including it would make the grid not a grid)
   f2001,
   f2002,
   f2003,
