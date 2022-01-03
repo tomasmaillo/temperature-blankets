@@ -9,21 +9,26 @@ import Images from "./assets/images";
 
 const flags = [];
 
-const w = 20;
-const dx = 500;
-const r = () => Math.random() * 30 - 60;
-for (let x = 0; x < w; x += 1) {
-  flags.push({
-    id: `${x}`,
-    position: [dx * x - (dx * w) / 2 + r(), 0, -350],
-    flagSrc: Images[x],
-    year: 2000 + x,
-  });
+const w = 5;
+const h = 5;
+const dx = 250;
+const dy = 350;
+for (let y = 0; y < h; y += 1) {
+  for (let x = 0; x < w; x += 1) {
+    if (x + y * w > Images.length - 1) continue;
+    console.log(`${x + y * w} ${Images.length - 1}`);
+    flags.push({
+      id: `${x}-${y}`,
+      position: [dx * x - (dx * w) / 2 + 120, dy * y - (dy * h) / 2 + dy, -600],
+      flagSrc: Images[x + y * h],
+      year: 2000 + x,
+    });
+  }
 }
 
 function App() {
   return (
-    <Canvas camera={{ near: 1, far: 500 }}>
+    <Canvas camera={{ near: 1, far: 1000 }}>
       <OrbitControls />
       <pointLight position={[10, 10, 10]} color={0xffffff} intensity={0.8} />
       <Suspense fallback={<Loader />}>

@@ -10,6 +10,8 @@ class Cloth {
     this.distance = distance || 25;
     this.windEnabled = true;
 
+    this.timeOffset = Math.floor(Math.random() * 10000);
+
     this.setupPhysics();
     this.createGeometryFunction();
     this.createParticles();
@@ -95,7 +97,7 @@ class Cloth {
   }
 
   updateWindForce(delta) {
-    const time = Date.now();
+    const time = Date.now() + this.timeOffset;
     this.windStrength = Math.cos(time / 700000) * 20 + 50;
     this.windForce.set(
       Math.sin(time / 2000),

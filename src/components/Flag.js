@@ -14,7 +14,7 @@ function Flag({ flag, flagSrc }) {
   const geometry = useRef();
 
   useEffect(() => {
-    setCloth(new Cloth(20, 30, 10));
+    setCloth(new Cloth(13, 20, 16));
   }, []);
 
   useFrame(() => {
