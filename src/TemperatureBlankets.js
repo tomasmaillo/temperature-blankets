@@ -26,7 +26,7 @@ for (let y = 0; y < h; y += 1) {
   }
 }
 
-function App() {
+function TemperatureBlankets() {
   return (
     <Canvas camera={{ near: 1, far: 1000 }}>
       <OrbitControls />
@@ -43,4 +43,4 @@ function App() {
   );
 }
 
-export default App;
+export default TemperatureBlankets;
