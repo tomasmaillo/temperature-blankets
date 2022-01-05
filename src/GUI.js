@@ -6,7 +6,7 @@ function GUI() {
     <>
       <div>
         <h1>Temperature Blankets</h1>
-        <h3>Tap to start</h3>
+        <h3>Iowa daily temperatures by year</h3>
       </div>
     </>
   );
