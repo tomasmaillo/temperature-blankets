@@ -1,6 +1,8 @@
-import React, { Suspense } from "react";
-import { Canvas } from "react-three-fiber";
+import React, { Suspense, useRef } from "react";
+import { Canvas, useThree, useFrame } from "react-three-fiber";
 import { Stats, OrbitControls } from "drei";
+
+import * as THREE from "three";
 
 import Loader from "./components/Loader";
 import Flag from "./components/Flag";
@@ -28,19 +30,57 @@ for (let y = 0; y < h; y += 1) {
 
 function TemperatureBlankets() {
   return (
-    <Canvas camera={{ near: 1, far: 1000 }}>
-      <OrbitControls />
-      <pointLight position={[10, 10, 10]} color={0xffffff} intensity={0.8} />
+    <>
+      <pointLight position={[10, 10, 10]} color={0xffffff} intensity={0.5} />
       <Suspense fallback={<Loader />}>
         {flags.map((flag) => (
-          <>
-            <Flag key={flag.id} flag={flag} flagSrc={flag.flagSrc} />
-          </>
+          <Flag key={flag.id} flag={flag} flagSrc={flag.flagSrc} />
         ))}
+        <Dolly />
       </Suspense>
-      <Stats showPanel={0} />
+    </>
+  );
+}
+
+const Controls = () => {
+  const { camera, gl } = useThree();
+  const ref = useRef();
+  useFrame(() => ref.current.update());
+  return (
+    <OrbitControls
+      ref={ref}
+      target={[0, 0, -650]}
+      enableDamping
+      panSpeed={0}
+      enableZoom={false}
+      maxAzimuthAngle={Math.PI / 4}
+      maxPolarAngle={(Math.PI * 3) / 4}
+      minAzimuthAngle={-Math.PI / 4}
+      minPolarAngle={Math.PI / 4}
+      args={[camera, gl.domElement]}
+    />
+  );
+};
+
+function Dolly() {
+  useFrame(({ clock, camera }) => {
+    // such an ugly solution, im not proud
+    if (clock.getElapsedTime() > 1)
+      camera.position.z = THREE.MathUtils.lerp(camera.position.z, 100, 0.05);
+    camera.rotation.x = Math.sin(clock.getElapsedTime()) * 0.005;
+    camera.rotation.y = Math.sin(clock.getElapsedTime()) * 0.008;
+  });
+  return null;
+}
+
+function Content() {
+  return (
+    <Canvas linear camera={{ near: 1, far: 10000, position: [0, 0, 2000] }}>
+      <Controls />
+      <ambientLight intensity={0.5} />
+      <TemperatureBlankets />
     </Canvas>
   );
 }
 
-export default TemperatureBlankets;
+export default Content;
