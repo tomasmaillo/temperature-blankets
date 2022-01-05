@@ -38,7 +38,7 @@ function Flag({ flag, flagSrc }) {
 
   return (
     <group position={flag.position}>
-      <mesh ref={mesh} castShadow>
+      <mesh ref={mesh}>
         <parametricGeometry
           attach="geometry"
           args={cloth.toGeometryArgs()}
